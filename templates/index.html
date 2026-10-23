@@ -1,980 +1,1087 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Miss Hook Calculator</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      :root {
-        --ink: #1d1a16;
-        --paper: #fff3cf;
-        --dot: #f0d98f;
-        --card: #ffffff;
-        --yellow: #ffd23f;
-        --green: #4fd68a;
-        --red: #ff5d4d;
-        --blue: #6ec6ff;
-        --pink: #ffa6d1;
-        --muted: #6f665a;
-        --display:
-          "Lilita One", "Arial Rounded MT Bold", "Trebuchet MS", system-ui,
-          sans-serif;
-        --body: "Nunito", "Trebuchet MS", system-ui, sans-serif;
-      }
-      * {
-        box-sizing: border-box;
-      }
-      html {
-        -webkit-text-size-adjust: 100%;
-      }
-      body {
-        margin: 0;
-        min-height: 100vh;
-        color: var(--ink);
-        font: 700 16px/1.5 var(--body);
-        background-color: var(--paper);
-        background-image: radial-gradient(var(--dot) 1.6px, transparent 1.6px);
-        background-size: 22px 22px;
-      }
-      [hidden] {
-        display: none !important;
-      }
-      .wrap {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 28px 16px 72px;
-      }
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Miss Hook Calculator</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@600;700;800&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--ink: #1d1a16;
+				--paper: #fff3cf;
+				--dot: #f0d98f;
+				--card: #ffffff;
+				--yellow: #ffd23f;
+				--green: #4fd68a;
+				--red: #ff5d4d;
+				--blue: #6ec6ff;
+				--pink: #ffa6d1;
+				--muted: #6f665a;
+				--display:
+					"Lilita One", "Arial Rounded MT Bold", "Trebuchet MS", system-ui, sans-serif;
+				--body: "Nunito", "Trebuchet MS", system-ui, sans-serif;
+			}
+			* {
+				box-sizing: border-box;
+			}
+			html {
+				-webkit-text-size-adjust: 100%;
+			}
+			body {
+				margin: 0;
+				min-height: 100vh;
+				color: var(--ink);
+				font: 700 16px/1.5 var(--body);
+				background-color: var(--paper);
+				background-image: radial-gradient(var(--dot) 1.6px, transparent 1.6px);
+				background-size: 22px 22px;
+			}
+			[hidden] {
+				display: none !important;
+			}
+			.wrap {
+				max-width: 960px;
+				margin: 0 auto;
+				padding: 28px 16px 72px;
+			}
 
-      /* ---------- header ---------- */
-      header {
-        text-align: center;
-        margin-bottom: 28px;
-      }
-      .logo {
-        width: 64px;
-        height: 64px;
-        transform-origin: 50% 0;
-        animation: swing 2.6s ease-in-out infinite;
-      }
-      @keyframes swing {
-        0%,
-        100% {
-          transform: rotate(-12deg);
-        }
-        50% {
-          transform: rotate(12deg);
-        }
-      }
-      h1 {
-        margin: 6px 0 8px;
-        font: 400 clamp(2.2rem, 8vw, 3.8rem)/1.05 var(--display);
-        letter-spacing: 0.01em;
-      }
-      h1 .miss {
-        display: inline-block;
-        background: var(--red);
-        color: #fff;
-        padding: 0 14px 4px;
-        border: 3px solid var(--ink);
-        border-radius: 14px;
-        box-shadow: 4px 4px 0 var(--ink);
-        transform: rotate(-3deg);
-        margin-right: 4px;
-      }
-      header p {
-        margin: 0;
-        color: var(--muted);
-        font-size: 1.05rem;
-      }
+			/* ---------- header ---------- */
+			header {
+				text-align: center;
+				margin-bottom: 28px;
+			}
+			.logo {
+				width: 64px;
+				height: 64px;
+				transform-origin: 50% 0;
+				animation: swing 2.6s ease-in-out infinite;
+			}
+			@keyframes swing {
+				0%,
+				100% {
+					transform: rotate(-12deg);
+				}
+				50% {
+					transform: rotate(12deg);
+				}
+			}
+			h1 {
+				margin: 6px 0 8px;
+				font: 400 clamp(2.2rem, 8vw, 3.8rem)/1.05 var(--display);
+				letter-spacing: 0.01em;
+			}
+			h1 .miss {
+				display: inline-block;
+				background: var(--red);
+				color: #fff;
+				padding: 0 14px 4px;
+				border: 3px solid var(--ink);
+				border-radius: 14px;
+				box-shadow: 4px 4px 0 var(--ink);
+				transform: rotate(-3deg);
+				margin-right: 4px;
+			}
+			header p {
+				margin: 0;
+				color: var(--muted);
+				font-size: 1.05rem;
+			}
 
-      /* ---------- shared pieces ---------- */
-      .card {
-        background: var(--card);
-        border: 3px solid var(--ink);
-        border-radius: 20px;
-        box-shadow: 6px 6px 0 var(--ink);
-        padding: 20px;
-      }
-      .btn,
-      .chip {
-        font: 800 1rem var(--body);
-        color: var(--ink);
-        border: 3px solid var(--ink);
-        border-radius: 999px;
-        cursor: pointer;
-        transition:
-          transform 0.08s,
-          box-shadow 0.08s,
-          background 0.12s;
-      }
-      .btn {
-        background: var(--yellow);
-        padding: 12px 26px;
-        box-shadow: 4px 4px 0 var(--ink);
-        font-size: 1.1rem;
-      }
-      .btn:hover:not(:disabled) {
-        transform: translate(-2px, -2px);
-        box-shadow: 6px 6px 0 var(--ink);
-      }
-      .btn:active:not(:disabled) {
-        transform: translate(4px, 4px);
-        box-shadow: 0 0 0 var(--ink);
-      }
-      .btn:disabled {
-        background: #e7e0cf;
-        color: var(--muted);
-        border-style: dashed;
-        box-shadow: none;
-        cursor: not-allowed;
-      }
-      .btn .spinner {
-        display: none;
-        width: 14px;
-        height: 14px;
-        margin-right: 8px;
-        vertical-align: -2px;
-        border: 3px solid var(--ink);
-        border-top-color: transparent;
-        border-radius: 50%;
-        animation: spin 0.6s linear infinite;
-      }
-      .btn.loading .spinner {
-        display: inline-block;
-      }
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
+			/* ---------- shared pieces ---------- */
+			.card {
+				background: var(--card);
+				border: 3px solid var(--ink);
+				border-radius: 20px;
+				box-shadow: 6px 6px 0 var(--ink);
+				padding: 20px;
+			}
+			.btn,
+			.chip {
+				font: 800 1rem var(--body);
+				color: var(--ink);
+				border: 3px solid var(--ink);
+				border-radius: 999px;
+				cursor: pointer;
+				transition:
+					transform 0.08s,
+					box-shadow 0.08s,
+					background 0.12s;
+			}
+			.btn {
+				background: var(--yellow);
+				padding: 12px 26px;
+				box-shadow: 4px 4px 0 var(--ink);
+				font-size: 1.1rem;
+			}
+			.btn:hover:not(:disabled) {
+				transform: translate(-2px, -2px);
+				box-shadow: 6px 6px 0 var(--ink);
+			}
+			.btn:active:not(:disabled) {
+				transform: translate(4px, 4px);
+				box-shadow: 0 0 0 var(--ink);
+			}
+			.btn:disabled {
+				background: #e7e0cf;
+				color: var(--muted);
+				border-style: dashed;
+				box-shadow: none;
+				cursor: not-allowed;
+			}
+			.btn .spinner {
+				display: none;
+				width: 14px;
+				height: 14px;
+				margin-right: 8px;
+				vertical-align: -2px;
+				border: 3px solid var(--ink);
+				border-top-color: transparent;
+				border-radius: 50%;
+				animation: spin 0.6s linear infinite;
+			}
+			.btn.loading .spinner {
+				display: inline-block;
+			}
+			@keyframes spin {
+				to {
+					transform: rotate(360deg);
+				}
+			}
 
-      /* ---------- upload ---------- */
-      .drop {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 4px;
-        text-align: center;
-        padding: 28px 16px;
-        border: 3px dashed var(--ink);
-        border-radius: 16px;
-        background: #fff0b3;
-        cursor: pointer;
-        transition:
-          transform 0.15s,
-          background 0.15s;
-      }
-      .drop:hover {
-        transform: rotate(-0.6deg) scale(1.01);
-        background: #ffe680;
-      }
-      .drop.drag {
-        background: var(--green);
-        transform: scale(1.02);
-      }
-      .drop .emoji {
-        font-size: 2.4rem;
-        line-height: 1;
-      }
-      .drop strong {
-        font: 400 1.4rem var(--display);
-      }
-      .drop span {
-        color: var(--muted);
-        font-size: 0.95rem;
-      }
-      .drop .file-name {
-        color: var(--ink);
-        background: #fff;
-        border: 2px solid var(--ink);
-        border-radius: 8px;
-        padding: 0 10px;
-        word-break: break-all;
-      }
-      .drop input {
-        display: none;
-      }
-      .actions {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 18px;
-      }
-      @media (max-width: 520px) {
-        .actions .btn {
-          width: 100%;
-        }
-      }
-      .error {
-        margin-top: 16px;
-        padding: 12px 16px;
-        background: var(--red);
-        color: #fff;
-        border: 3px solid var(--ink);
-        border-radius: 14px;
-        box-shadow: 4px 4px 0 var(--ink);
-        white-space: pre-wrap;
-        word-break: break-word;
-      }
+			/* ---------- upload ---------- */
+			.drop {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 4px;
+				text-align: center;
+				padding: 28px 16px;
+				border: 3px dashed var(--ink);
+				border-radius: 16px;
+				background: #fff0b3;
+				cursor: pointer;
+				transition:
+					transform 0.15s,
+					background 0.15s;
+			}
+			.drop:hover {
+				transform: rotate(-0.6deg) scale(1.01);
+				background: #ffe680;
+			}
+			.drop.drag {
+				background: var(--green);
+				transform: scale(1.02);
+			}
+			.drop .emoji {
+				font-size: 2.4rem;
+				line-height: 1;
+			}
+			.drop strong {
+				font: 400 1.4rem var(--display);
+			}
+			.drop span {
+				color: var(--muted);
+				font-size: 0.95rem;
+			}
+			.drop .file-name {
+				color: var(--ink);
+				background: #fff;
+				border: 2px solid var(--ink);
+				border-radius: 8px;
+				padding: 0 10px;
+				word-break: break-all;
+			}
+			.drop input {
+				display: none;
+			}
+			.path-box {
+				display: flex;
+				align-items: stretch;
+				margin-top: 16px;
+				border: 3px solid var(--ink);
+				border-radius: 12px;
+				overflow: hidden;
+				background: var(--ink);
+			}
+			.path-icon,
+			.copy-icon {
+				flex: none;
+				width: 44px;
+				display: grid;
+				place-items: center;
+				color: var(--ink);
+			}
+			.path-icon {
+				background: var(--blue);
+				border-right: 3px solid var(--ink);
+			}
+			.path {
+				flex: 1;
+				min-width: 0;
+				overflow-x: auto;
+				white-space: nowrap;
+				align-self: center;
+				padding: 9px 12px;
+				color: #b6ffcb;
+				user-select: all;
+				scrollbar-width: thin;
+				font:
+					600 0.85rem ui-monospace,
+					SFMono-Regular,
+					Menlo,
+					Consolas,
+					monospace;
+			}
+			.copy-icon {
+				padding: 0;
+				border: 0;
+				border-left: 3px solid var(--ink);
+				background: var(--yellow);
+				cursor: pointer;
+				transition: background 0.12s;
+			}
+			.copy-icon:hover {
+				background: #ffe680;
+			}
+			.copy-icon:active,
+			.copy-icon.done {
+				background: var(--green);
+			}
+			.copy-icon:focus-visible {
+				outline: 3px solid var(--blue);
+				outline-offset: -6px;
+			}
+			.path-icon svg,
+			.copy-icon svg {
+				width: 20px;
+				height: 20px;
+			}
+			.copy-icon .i-check {
+				display: none;
+			}
+			.copy-icon.done .i-copy {
+				display: none;
+			}
+			.copy-icon.done .i-check {
+				display: block;
+			}
+			.actions {
+				display: flex;
+				justify-content: flex-end;
+				margin-top: 18px;
+			}
+			@media (max-width: 520px) {
+				.actions .btn {
+					width: 100%;
+				}
+			}
+			.error {
+				margin-top: 16px;
+				padding: 12px 16px;
+				background: var(--red);
+				color: #fff;
+				border: 3px solid var(--ink);
+				border-radius: 14px;
+				box-shadow: 4px 4px 0 var(--ink);
+				white-space: pre-wrap;
+				word-break: break-word;
+			}
 
-      /* ---------- toolbar ---------- */
-      #results {
-        margin-top: 28px;
-        display: grid;
-        gap: 22px;
-      }
-      .toolbar {
-        display: grid;
-        gap: 14px;
-      }
-      .row {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 8px 10px;
-      }
-      .label {
-        font: 400 0.95rem var(--display);
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        background: var(--ink);
-        color: var(--paper);
-        padding: 2px 10px;
-        border-radius: 8px;
-      }
-      .chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-      .chip {
-        background: #fff;
-        padding: 6px 16px;
-        font-size: 0.95rem;
-      }
-      .chip:hover {
-        background: var(--paper);
-      }
-      .chip.on {
-        background: var(--yellow);
-        box-shadow: 3px 3px 0 var(--ink);
-        transform: translate(-1px, -1px);
-      }
-      #f-result [data-v="hit"].on {
-        background: var(--green);
-      }
-      #f-result [data-v="miss"].on {
-        background: var(--red);
-        color: #fff;
-      }
-      #view-seg .chip.on {
-        background: var(--blue);
-      }
-      @media (max-width: 520px) {
-        #view-seg {
-          width: 100%;
-        }
-        #view-seg .chip {
-          flex: 1 1 45%;
-        }
-      }
+			/* ---------- toolbar ---------- */
+			#results {
+				margin-top: 28px;
+				display: grid;
+				gap: 22px;
+			}
+			.toolbar {
+				display: grid;
+				gap: 14px;
+			}
+			.row {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: 8px 10px;
+			}
+			.label {
+				font: 400 0.95rem var(--display);
+				letter-spacing: 0.05em;
+				text-transform: uppercase;
+				background: var(--ink);
+				color: var(--paper);
+				padding: 2px 10px;
+				border-radius: 8px;
+			}
+			.chips {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 8px;
+			}
+			.chip {
+				background: #fff;
+				padding: 6px 16px;
+				font-size: 0.95rem;
+			}
+			.chip:hover {
+				background: var(--paper);
+			}
+			.chip.on {
+				background: var(--yellow);
+				box-shadow: 3px 3px 0 var(--ink);
+				transform: translate(-1px, -1px);
+			}
+			#f-result [data-v="hit"].on {
+				background: var(--green);
+			}
+			#f-result [data-v="miss"].on {
+				background: var(--red);
+				color: #fff;
+			}
+			#view-seg .chip.on {
+				background: var(--blue);
+			}
+			@media (max-width: 520px) {
+				#view-seg {
+					width: 100%;
+				}
+				#view-seg .chip {
+					flex: 1 1 45%;
+				}
+			}
 
-      /* ---------- overview ---------- */
-      .stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 16px;
-      }
-      .stat {
-        border: 3px solid var(--ink);
-        border-radius: 16px;
-        padding: 12px 16px;
-        box-shadow: 4px 4px 0 var(--ink);
-      }
-      .stat:nth-child(odd) {
-        transform: rotate(-1.2deg);
-      }
-      .stat:nth-child(even) {
-        transform: rotate(1deg);
-      }
-      .stat .k {
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-      }
-      .stat .v {
-        font: 400 2.5rem/1.1 var(--display);
-      }
-      .stat.total {
-        background: var(--blue);
-      }
-      .stat.hit {
-        background: var(--green);
-      }
-      .stat.miss {
-        background: var(--red);
-        color: #fff;
-      }
-      .stat.acc {
-        background: var(--yellow);
-      }
+			/* ---------- overview ---------- */
+			.stats {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+				gap: 16px;
+			}
+			.stat {
+				border: 3px solid var(--ink);
+				border-radius: 16px;
+				padding: 12px 16px;
+				box-shadow: 4px 4px 0 var(--ink);
+			}
+			.stat:nth-child(odd) {
+				transform: rotate(-1.2deg);
+			}
+			.stat:nth-child(even) {
+				transform: rotate(1deg);
+			}
+			.stat .k {
+				font-size: 0.85rem;
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+			}
+			.stat .v {
+				font: 400 2.5rem/1.1 var(--display);
+			}
+			.stat.total {
+				background: var(--blue);
+			}
+			.stat.hit {
+				background: var(--green);
+			}
+			.stat.miss {
+				background: var(--red);
+				color: #fff;
+			}
+			.stat.acc {
+				background: var(--yellow);
+			}
 
-      .bar {
-        display: flex;
-        height: 28px;
-        margin: 22px 0 8px;
-        border: 3px solid var(--ink);
-        border-radius: 999px;
-        overflow: hidden;
-        background: #fff;
-      }
-      .bar i {
-        display: block;
-        height: 100%;
-        transition: width 0.5s cubic-bezier(0.3, 1.4, 0.5, 1);
-      }
-      .bar i + i {
-        border-left: 3px solid var(--ink);
-      }
-      .bar .h,
-      .track .h {
-        background: var(--green);
-      }
-      .bar .m,
-      .track .m {
-        background: var(--red);
-      }
-      .legend {
-        display: flex;
-        gap: 18px;
-        font-size: 0.9rem;
-      }
-      .dot {
-        display: inline-block;
-        width: 14px;
-        height: 14px;
-        margin-right: 6px;
-        border: 2px solid var(--ink);
-        border-radius: 50%;
-        vertical-align: -2px;
-      }
+			.bar {
+				display: flex;
+				height: 28px;
+				margin: 22px 0 8px;
+				border: 3px solid var(--ink);
+				border-radius: 999px;
+				overflow: hidden;
+				background: #fff;
+			}
+			.bar i {
+				display: block;
+				height: 100%;
+				transition: width 0.5s cubic-bezier(0.3, 1.4, 0.5, 1);
+			}
+			.bar i + i {
+				border-left: 3px solid var(--ink);
+			}
+			.bar .h,
+			.track .h {
+				background: var(--green);
+			}
+			.bar .m,
+			.track .m {
+				background: var(--red);
+			}
+			.legend {
+				display: flex;
+				gap: 18px;
+				font-size: 0.9rem;
+			}
+			.dot {
+				display: inline-block;
+				width: 14px;
+				height: 14px;
+				margin-right: 6px;
+				border: 2px solid var(--ink);
+				border-radius: 50%;
+				vertical-align: -2px;
+			}
 
-      h3 {
-        margin: 0 0 12px;
-        font: 400 1.35rem var(--display);
-      }
-      .two {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 28px;
-        margin-top: 26px;
-      }
-      .breakdown {
-        display: grid;
-        gap: 14px;
-      }
-      .brow {
-        display: grid;
-        grid-template-columns: minmax(90px, 150px) 1fr auto;
-        gap: 12px;
-        align-items: center;
-      }
-      .brow .name {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-      .brow .num {
-        font-size: 0.85rem;
-        color: var(--muted);
-        white-space: nowrap;
-      }
-      .track {
-        display: flex;
-        height: 18px;
-        border: 2px solid var(--ink);
-        border-radius: 999px;
-        overflow: hidden;
-        background: #fff;
-      }
-      .track i {
-        display: block;
-        height: 100%;
-      }
-      .track i + i {
-        border-left: 2px solid var(--ink);
-      }
-      @media (max-width: 720px) {
-        .two {
-          grid-template-columns: 1fr;
-        }
-        .brow {
-          grid-template-columns: 1fr auto;
-        }
-        .brow .track {
-          grid-column: 1 / -1;
-          order: 3;
-        }
-      }
+			h3 {
+				margin: 0 0 12px;
+				font: 400 1.35rem var(--display);
+			}
+			.two {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 28px;
+				margin-top: 26px;
+			}
+			.breakdown {
+				display: grid;
+				gap: 14px;
+			}
+			.brow {
+				display: grid;
+				grid-template-columns: minmax(90px, 150px) 1fr auto;
+				gap: 12px;
+				align-items: center;
+			}
+			.brow .name {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			.brow .num {
+				font-size: 0.85rem;
+				color: var(--muted);
+				white-space: nowrap;
+			}
+			.track {
+				display: flex;
+				height: 18px;
+				border: 2px solid var(--ink);
+				border-radius: 999px;
+				overflow: hidden;
+				background: #fff;
+			}
+			.track i {
+				display: block;
+				height: 100%;
+			}
+			.track i + i {
+				border-left: 2px solid var(--ink);
+			}
+			@media (max-width: 720px) {
+				.two {
+					grid-template-columns: 1fr;
+				}
+				.brow {
+					grid-template-columns: 1fr auto;
+				}
+				.brow .track {
+					grid-column: 1 / -1;
+					order: 3;
+				}
+			}
 
-      /* ---------- table ---------- */
-      .table-wrap {
-        overflow-x: auto;
-        border: 3px solid var(--ink);
-        border-radius: 14px;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        font-variant-numeric: tabular-nums;
-      }
-      th,
-      td {
-        text-align: left;
-        padding: 10px 14px;
-        white-space: nowrap;
-      }
-      thead th {
-        background: var(--yellow);
-        border-bottom: 3px solid var(--ink);
-        font: 400 0.95rem var(--display);
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-      }
-      th.sortable {
-        cursor: pointer;
-        user-select: none;
-      }
-      th.sortable:hover {
-        background: #ffe680;
-      }
-      tbody td {
-        border-bottom: 2px dashed #d9cfb8;
-      }
-      tbody tr:last-child td {
-        border-bottom: 0;
-      }
-      tbody tr:nth-child(even) {
-        background: #fffaf0;
-      }
-      tbody tr:hover {
-        background: #fff0b3;
-      }
-      .pill {
-        display: inline-block;
-        padding: 1px 12px;
-        border: 2px solid var(--ink);
-        border-radius: 999px;
-        font-size: 0.8rem;
-        font-weight: 800;
-        letter-spacing: 0.04em;
-      }
-      .pill.hit {
-        background: var(--green);
-      }
-      .pill.miss {
-        background: var(--red);
-        color: #fff;
-      }
-      .pill.tag {
-        background: #fff;
-        font-weight: 700;
-      }
-      .dash {
-        color: var(--muted);
-      }
-      .note {
-        color: var(--muted);
-        font-size: 0.8rem;
-        font-style: italic;
-        margin-left: 4px;
-      }
+			/* ---------- table ---------- */
+			.table-wrap {
+				overflow-x: auto;
+				border: 3px solid var(--ink);
+				border-radius: 14px;
+			}
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				font-variant-numeric: tabular-nums;
+			}
+			th,
+			td {
+				text-align: left;
+				padding: 10px 14px;
+				white-space: nowrap;
+			}
+			thead th {
+				background: var(--yellow);
+				border-bottom: 3px solid var(--ink);
+				font: 400 0.95rem var(--display);
+				letter-spacing: 0.05em;
+				text-transform: uppercase;
+			}
+			th.sortable {
+				cursor: pointer;
+				user-select: none;
+			}
+			th.sortable:hover {
+				background: #ffe680;
+			}
+			tbody td {
+				border-bottom: 2px dashed #d9cfb8;
+			}
+			tbody tr:last-child td {
+				border-bottom: 0;
+			}
+			tbody tr:nth-child(even) {
+				background: #fffaf0;
+			}
+			tbody tr:hover {
+				background: #fff0b3;
+			}
+			.pill {
+				display: inline-block;
+				padding: 1px 12px;
+				border: 2px solid var(--ink);
+				border-radius: 999px;
+				font-size: 0.8rem;
+				font-weight: 800;
+				letter-spacing: 0.04em;
+			}
+			.pill.hit {
+				background: var(--green);
+			}
+			.pill.miss {
+				background: var(--red);
+				color: #fff;
+			}
+			.pill.tag {
+				background: #fff;
+				font-weight: 700;
+			}
+			.dash {
+				color: var(--muted);
+			}
+			.note {
+				color: var(--muted);
+				font-size: 0.8rem;
+				font-style: italic;
+				margin-left: 4px;
+			}
 
-      /* toggle switches */
-      .switches {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px 22px;
-      }
-      .switch {
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        cursor: pointer;
-        user-select: none;
-        font-weight: 800;
-        font-size: 0.95rem;
-      }
-      .switch input {
-        position: absolute;
-        opacity: 0;
-        pointer-events: none;
-      }
-      .sw {
-        position: relative;
-        flex: none;
-        width: 46px;
-        height: 26px;
-        border: 3px solid var(--ink);
-        border-radius: 999px;
-        background: #fff;
-        transition: background 0.12s;
-      }
-      .sw::after {
-        content: "";
-        position: absolute;
-        top: 2px;
-        left: 2px;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        background: var(--ink);
-        transition: transform 0.15s cubic-bezier(0.3, 1.5, 0.5, 1);
-      }
-      .switch input:checked + .sw {
-        background: var(--green);
-      }
-      .switch input:checked + .sw::after {
-        transform: translateX(20px);
-      }
-      .switch input:focus-visible + .sw {
-        outline: 3px solid var(--blue);
-        outline-offset: 2px;
-      }
-      .chips.disabled {
-        opacity: 0.4;
-        pointer-events: none;
-      }
-      .empty {
-        text-align: center;
-        color: var(--muted);
-        padding: 32px 8px;
-        font-size: 1.1rem;
-      }
+			/* toggle switches */
+			.switches {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 10px 22px;
+			}
+			.switch {
+				position: relative;
+				display: inline-flex;
+				align-items: center;
+				gap: 10px;
+				cursor: pointer;
+				user-select: none;
+				font-weight: 800;
+				font-size: 0.95rem;
+			}
+			.switch input {
+				position: absolute;
+				opacity: 0;
+				pointer-events: none;
+			}
+			.sw {
+				position: relative;
+				flex: none;
+				width: 46px;
+				height: 26px;
+				border: 3px solid var(--ink);
+				border-radius: 999px;
+				background: #fff;
+				transition: background 0.12s;
+			}
+			.sw::after {
+				content: "";
+				position: absolute;
+				top: 2px;
+				left: 2px;
+				width: 16px;
+				height: 16px;
+				border-radius: 50%;
+				background: var(--ink);
+				transition: transform 0.15s cubic-bezier(0.3, 1.5, 0.5, 1);
+			}
+			.switch input:checked + .sw {
+				background: var(--green);
+			}
+			.switch input:checked + .sw::after {
+				transform: translateX(20px);
+			}
+			.switch input:focus-visible + .sw {
+				outline: 3px solid var(--blue);
+				outline-offset: 2px;
+			}
+			.chips.disabled {
+				opacity: 0.4;
+				pointer-events: none;
+			}
+			.empty {
+				text-align: center;
+				color: var(--muted);
+				padding: 32px 8px;
+				font-size: 1.1rem;
+			}
 
-      /* ---------- timeline ---------- */
-      .timeline {
-        position: relative;
-        height: 190px;
-        margin: 14px 10px 6px;
-      }
-      .timeline .axis {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 90px;
-        height: 6px;
-        background: var(--ink);
-        border-radius: 6px;
-      }
-      .timeline .lane {
-        position: absolute;
-        left: 0;
-        font: 400 0.8rem var(--display);
-        letter-spacing: 0.08em;
-        opacity: 0.55;
-      }
-      .timeline .lane.up {
-        top: 0;
-      }
-      .timeline .lane.down {
-        bottom: 22px;
-      }
-      .timeline .tick {
-        position: absolute;
-        bottom: 0;
-        transform: translateX(-50%);
-        font-size: 0.75rem;
-        color: var(--muted);
-      }
-      .timeline .tickline {
-        position: absolute;
-        top: 86px;
-        width: 3px;
-        height: 14px;
-        margin-left: -1px;
-        background: var(--ink);
-        border-radius: 2px;
-      }
-      .mark {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        margin-left: -10px;
-        border: 3px solid var(--ink);
-        border-radius: 50%;
-        cursor: pointer;
-        transition: transform 0.12s;
-      }
-      .mark.hit {
-        top: 56px;
-        background: var(--green);
-      }
-      .mark.miss {
-        top: 106px;
-        background: var(--red);
-      }
-      .mark:hover {
-        transform: scale(1.5);
-        z-index: 3;
-      }
-      .tip {
-        position: absolute;
-        transform: translateX(-50%);
-        background: var(--ink);
-        color: #fff;
-        padding: 6px 12px;
-        border-radius: 10px;
-        font-size: 0.8rem;
-        white-space: nowrap;
-        pointer-events: none;
-        z-index: 6;
-      }
-      .tip::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        bottom: -6px;
-        margin-left: -6px;
-        border: 6px solid transparent;
-        border-bottom: 0;
-        border-top-color: var(--ink);
-      }
-      .hint {
-        color: var(--muted);
-        font-size: 0.9rem;
-        margin: 12px 0 0;
-      }
+			/* ---------- timeline ---------- */
+			.timeline {
+				position: relative;
+				height: 190px;
+				margin: 14px 10px 6px;
+			}
+			.timeline .axis {
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 90px;
+				height: 6px;
+				background: var(--ink);
+				border-radius: 6px;
+			}
+			.timeline .lane {
+				position: absolute;
+				left: 0;
+				font: 400 0.8rem var(--display);
+				letter-spacing: 0.08em;
+				opacity: 0.55;
+			}
+			.timeline .lane.up {
+				top: 0;
+			}
+			.timeline .lane.down {
+				bottom: 22px;
+			}
+			.timeline .tick {
+				position: absolute;
+				bottom: 0;
+				transform: translateX(-50%);
+				font-size: 0.75rem;
+				color: var(--muted);
+			}
+			.timeline .tickline {
+				position: absolute;
+				top: 86px;
+				width: 3px;
+				height: 14px;
+				margin-left: -1px;
+				background: var(--ink);
+				border-radius: 2px;
+			}
+			.mark {
+				position: absolute;
+				width: 20px;
+				height: 20px;
+				margin-left: -10px;
+				border: 3px solid var(--ink);
+				border-radius: 50%;
+				cursor: pointer;
+				transition: transform 0.12s;
+			}
+			.mark.hit {
+				top: 56px;
+				background: var(--green);
+			}
+			.mark.miss {
+				top: 106px;
+				background: var(--red);
+			}
+			.mark:hover {
+				transform: scale(1.5);
+				z-index: 3;
+			}
+			.tip {
+				position: absolute;
+				transform: translateX(-50%);
+				background: var(--ink);
+				color: #fff;
+				padding: 6px 12px;
+				border-radius: 10px;
+				font-size: 0.8rem;
+				white-space: nowrap;
+				pointer-events: none;
+				z-index: 6;
+			}
+			.tip::after {
+				content: "";
+				position: absolute;
+				left: 50%;
+				bottom: -6px;
+				margin-left: -6px;
+				border: 6px solid transparent;
+				border-bottom: 0;
+				border-top-color: var(--ink);
+			}
+			.hint {
+				color: var(--muted);
+				font-size: 0.9rem;
+				margin: 12px 0 0;
+			}
 
-      /* ---------- raw ---------- */
-      pre.raw {
-        margin: 0;
-        padding: 16px;
-        max-height: 520px;
-        overflow: auto;
-        background: var(--ink);
-        color: #b6ffcb;
-        border-radius: 12px;
-        font:
-          600 0.82rem/1.5 ui-monospace,
-          SFMono-Regular,
-          Menlo,
-          Consolas,
-          monospace;
-        white-space: pre-wrap;
-        word-break: break-word;
-      }
-      .copy {
-        margin-bottom: 12px;
-        padding: 6px 16px;
-        font-size: 0.9rem;
-      }
+			/* ---------- raw ---------- */
+			pre.raw {
+				margin: 0;
+				padding: 16px;
+				max-height: 520px;
+				overflow: auto;
+				background: var(--ink);
+				color: #b6ffcb;
+				border-radius: 12px;
+				font:
+					600 0.82rem/1.5 ui-monospace,
+					SFMono-Regular,
+					Menlo,
+					Consolas,
+					monospace;
+				white-space: pre-wrap;
+				word-break: break-word;
+			}
+			.copy {
+				margin-bottom: 12px;
+				padding: 6px 16px;
+				font-size: 0.9rem;
+			}
 
-      @media (prefers-reduced-motion: reduce) {
-        .logo {
-          animation: none;
-        }
-        * {
-          transition: none !important;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="wrap">
-      <header>
-        <svg
-          class="logo"
-          viewBox="0 0 64 64"
-          fill="none"
-          stroke="#1d1a16"
-          stroke-width="4"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-        >
-          <circle cx="32" cy="8" r="5" fill="#ffd23f" />
-          <path d="M32 13v28a11 11 0 1 1-11-11" />
-          <path d="M21 30l-7-7M21 30l-8 3" fill="none" />
-        </svg>
-        <h1><span class="miss">Miss</span> Hook Calculator</h1>
-        <p>
-          Drop in a replay. We'll count every hook, and every swing at thin air.
-        </p>
-      </header>
+			@media (prefers-reduced-motion: reduce) {
+				.logo {
+					animation: none;
+				}
+				* {
+					transition: none !important;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<header>
+				<svg
+					class="logo"
+					viewBox="0 0 64 64"
+					fill="none"
+					stroke="#1d1a16"
+					stroke-width="4"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					aria-hidden="true"
+				>
+					<circle cx="32" cy="8" r="5" fill="#ffd23f" />
+					<path d="M32 13v28a11 11 0 1 1-11-11" />
+					<path d="M21 30l-7-7M21 30l-8 3" fill="none" />
+				</svg>
+				<h1><span class="miss">Miss</span> Hook Calculator</h1>
+				<p>Drop in a replay. We'll count every hook, and every swing at thin air.</p>
+			</header>
 
-      <form id="replay-form" class="card">
-        <label class="drop" id="drop">
-          <div class="emoji">🥩</div>
-          <strong id="drop-title">Drop a replay here</strong>
-          <span id="drop-sub">or click to dig one up</span>
-          <input type="file" id="file-input" />
-        </label>
-        <div class="actions">
-          <button type="submit" id="submit-btn" class="btn" disabled>
-            <span class="spinner"></span
-            ><span id="btn-text">Count my misses!</span>
-          </button>
-        </div>
-        <div id="error" class="error" role="alert" hidden></div>
-      </form>
+			<form id="replay-form" class="card">
+				<label class="drop" id="drop">
+					<div class="emoji">🥩</div>
+					<strong id="drop-title">Drop a replay here</strong>
+					<span id="drop-sub">or click to dig one up</span>
+					<input type="file" id="file-input" />
+				</label>
+				<div class="path-box" title="Where your Dota 2 replays are saved">
+					<span class="path-icon" aria-hidden="true">
+						<svg
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2.2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						>
+							<path
+								d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+							/>
+						</svg>
+					</span>
+					<code id="replay-path" class="path"></code>
+					<button
+						type="button"
+						class="copy-icon"
+						id="copy-path"
+						title="Copy path"
+						aria-label="Copy path"
+					>
+						<svg
+							class="i-copy"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2.2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						>
+							<rect x="9" y="9" width="11" height="11" rx="2" />
+							<path d="M5 15V6a2 2 0 0 1 2-2h9" />
+						</svg>
+						<svg
+							class="i-check"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="3"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						>
+							<path d="M5 12.5l4.5 4.5L19 7.5" />
+						</svg>
+					</button>
+				</div>
+				<div class="actions">
+					<button type="submit" id="submit-btn" class="btn" disabled>
+						<span class="spinner"></span><span id="btn-text">Count my misses!</span>
+					</button>
+				</div>
+				<div id="error" class="error" role="alert" hidden></div>
+			</form>
 
-      <section id="results" hidden>
-        <div class="card toolbar">
-          <div class="row">
-            <span class="label">Show me</span>
-            <div class="chips" id="view-seg">
-              <button type="button" class="chip on" data-view="overview">
-                📊 The Damage
-              </button>
-              <button type="button" class="chip" data-view="table">
-                📋 Every Hook
-              </button>
-              <button type="button" class="chip" data-view="timeline">
-                🎞️ Hook Reel
-              </button>
-              <button type="button" class="chip" data-view="raw">
-                🤓 Nerd Stuff
-              </button>
-            </div>
-          </div>
-          <div id="filters" class="toolbar">
-            <div class="row">
-              <span class="label">Result</span>
-              <div class="chips" id="f-result">
-                <button type="button" class="chip on" data-v="all">All</button>
-                <button type="button" class="chip" data-v="hit">Hooked</button>
-                <button type="button" class="chip" data-v="miss">
-                  Whiffed
-                </button>
-              </div>
-            </div>
-            <div class="row">
-              <span class="label">Target</span>
-              <div class="chips" id="f-target">
-                <button type="button" class="chip on" data-v="all">
-                  Anyone
-                </button>
-                <button type="button" class="chip" data-v="enemy-hero">
-                  Enemy heroes
-                </button>
-                <button type="button" class="chip" data-v="ally-hero">
-                  Ally heroes
-                </button>
-                <button type="button" class="chip" data-v="enemy-creep">
-                  Enemy creeps
-                </button>
-                <button type="button" class="chip" data-v="ally-creep">
-                  Ally creeps
-                </button>
-              </div>
-              <p class="hint" style="margin: 0; flex-basis: 100%">
-                Whiffs have no target, so they only show up under "Anyone".
-              </p>
-            </div>
-            <div class="row">
-              <span class="label">Count as whiff</span>
-              <div class="switches">
-                <label class="switch"
-                  ><input type="checkbox" data-rule="enemyCreep" /><span
-                    class="sw"
-                  ></span
-                  >Hooking enemy creeps</label
-                >
-                <label class="switch"
-                  ><input type="checkbox" data-rule="allyCreep" /><span
-                    class="sw"
-                  ></span
-                  >Hooking ally creeps</label
-                >
-                <label class="switch"
-                  ><input type="checkbox" data-rule="allyHero" /><span
-                    class="sw"
-                  ></span
-                  >Hooking ally heroes</label
-                >
-              </div>
-            </div>
-            <div class="row" id="display-opts" hidden>
-              <span class="label">Display</span>
-              <div class="switches">
-                <label class="switch"
-                  ><input type="checkbox" id="t-decimals" checked /><span
-                    class="sw"
-                  ></span
-                  >Decimals in time</label
-                >
-              </div>
-            </div>
-          </div>
-        </div>
+			<section id="results" hidden>
+				<div class="card toolbar">
+					<div class="row">
+						<span class="label">Show me</span>
+						<div class="chips" id="view-seg">
+							<button type="button" class="chip on" data-view="overview">
+								📊 The Damage
+							</button>
+							<button type="button" class="chip" data-view="table">
+								📋 Every Hook
+							</button>
+							<button type="button" class="chip" data-view="timeline">
+								🎞️ Hook Reel
+							</button>
+							<button type="button" class="chip" data-view="raw">
+								🤓 Nerd Stuff
+							</button>
+						</div>
+					</div>
+					<div id="filters" class="toolbar">
+						<div class="row">
+							<span class="label">Result</span>
+							<div class="chips" id="f-result">
+								<button type="button" class="chip on" data-v="all">All</button>
+								<button type="button" class="chip" data-v="hit">Hooked</button>
+								<button type="button" class="chip" data-v="miss">Whiffed</button>
+							</div>
+						</div>
+						<div class="row">
+							<span class="label">Target</span>
+							<div class="chips" id="f-target">
+								<button type="button" class="chip on" data-v="all">Anyone</button>
+								<button type="button" class="chip" data-v="enemy-hero">
+									Enemy heroes
+								</button>
+								<button type="button" class="chip" data-v="ally-hero">
+									Ally heroes
+								</button>
+								<button type="button" class="chip" data-v="enemy-creep">
+									Enemy creeps
+								</button>
+								<button type="button" class="chip" data-v="ally-creep">
+									Ally creeps
+								</button>
+							</div>
+							<p class="hint" style="margin: 0; flex-basis: 100%">
+								Whiffs have no target, so they only show up under "Anyone".
+							</p>
+						</div>
+						<div class="row">
+							<span class="label">Count as whiff</span>
+							<div class="switches">
+								<label class="switch"
+									><input type="checkbox" data-rule="enemyCreep" /><span
+										class="sw"
+									></span
+									>Hooking enemy creeps</label
+								>
+								<label class="switch"
+									><input type="checkbox" data-rule="allyCreep" /><span
+										class="sw"
+									></span
+									>Hooking ally creeps</label
+								>
+								<label class="switch"
+									><input type="checkbox" data-rule="allyHero" /><span
+										class="sw"
+									></span
+									>Hooking ally heroes</label
+								>
+							</div>
+						</div>
+						<div class="row" id="display-opts" hidden>
+							<span class="label">Display</span>
+							<div class="switches">
+								<label class="switch"
+									><input type="checkbox" id="t-decimals" checked /><span
+										class="sw"
+									></span
+									>Decimals in time</label
+								>
+							</div>
+						</div>
+					</div>
+				</div>
 
-        <div class="card" id="panel"></div>
-      </section>
-    </div>
+				<div class="card" id="panel"></div>
+			</section>
+		</div>
 
-    <script>
-      /**
-       * @typedef {Object} Hook
-       * @property {number} timestamp
-       * @property {boolean} isMissed
-       * @property {boolean} [isEnemy]
-       * @property {boolean} [isCreep]
-       * @property {string} [target]
-       */
-      /**
-       * @typedef {Object} HookResponse
-       * @property {Hook[]} hooks
-       * @property {number} start
-       */
+		<script>
+			/**
+			 * @typedef {Object} Hook
+			 * @property {number} timestamp
+			 * @property {boolean} isMissed
+			 * @property {boolean} [isEnemy]
+			 * @property {boolean} [isCreep]
+			 * @property {string} [target]
+			 */
+			/**
+			 * @typedef {Object} HookResponse
+			 * @property {Hook[]} hooks
+			 * @property {number} start
+			 */
 
-      const $ = (id) => document.getElementById(id);
-      const form = $("replay-form");
-      const fileInput = $("file-input");
-      const drop = $("drop");
-      const submitBtn = $("submit-btn");
-      const errorBox = $("error");
-      const resultsEl = $("results");
-      const panel = $("panel");
+			const $ = (id) => document.getElementById(id);
+			const form = $("replay-form");
+			const fileInput = $("file-input");
+			const drop = $("drop");
+			const submitBtn = $("submit-btn");
+			const errorBox = $("error");
+			const resultsEl = $("results");
+			const panel = $("panel");
 
-      const state = {
-        /** @type {HookResponse|null} */ data: null,
-        view: "overview",
-        result: "all",
-        target: "all",
-        sortKey: "time",
-        sortDir: 1,
-        decimals: true,
-        /** Which landed hooks should be re-counted as whiffs. */
-        whiff: { enemyCreep: false, allyCreep: false, allyHero: false },
-      };
+			const state = {
+				/** @type {HookResponse|null} */ data: null,
+				view: "overview",
+				result: "all",
+				target: "all",
+				sortKey: "time",
+				sortDir: 1,
+				decimals: true,
+				/** Which landed hooks should be re-counted as whiffs. */
+				whiff: { enemyCreep: false, allyCreep: false, allyHero: false },
+			};
 
-      /* ---------- helpers ---------- */
-      const esc = (s) =>
-        String(s ?? "").replace(
-          /[&<>"']/g,
-          (c) =>
-            ({
-              "&": "&amp;",
-              "<": "&lt;",
-              ">": "&gt;",
-              '"': "&quot;",
-              "'": "&#39;",
-            })[c],
-        );
+			/* ---------- helpers ---------- */
+			const esc = (s) =>
+				String(s ?? "").replace(
+					/[&<>"']/g,
+					(c) =>
+						({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+							c
+						],
+				);
 
-      const fmtTime = (sec, decimals = true) => {
-        const neg = sec < 0;
-        sec = Math.abs(sec);
-        sec = decimals ? Math.round(sec * 10) / 10 : Math.floor(sec);
-        const m = Math.floor(sec / 60);
-        const rest = sec % 60;
-        const s = decimals
-          ? rest.toFixed(1).padStart(4, "0")
-          : String(rest).padStart(2, "0");
-        return `${neg ? "-" : ""}${m}:${s}`;
-      };
-      const pct = (a, b) => (b ? Math.round((a / b) * 1000) / 10 : 0);
+			const fmtTime = (sec, decimals = true) => {
+				const neg = sec < 0;
+				sec = Math.abs(sec);
+				sec = decimals ? Math.round(sec * 10) / 10 : Math.floor(sec);
+				const m = Math.floor(sec / 60);
+				const rest = sec % 60;
+				const s = decimals
+					? rest.toFixed(1).padStart(4, "0")
+					: String(rest).padStart(2, "0");
+				return `${neg ? "-" : ""}${m}:${s}`;
+			};
+			const pct = (a, b) => (b ? Math.round((a / b) * 1000) / 10 : 0);
 
-      const CAT = {
-        "enemy-hero": { one: "Enemy hero", many: "Enemy heroes" },
-        "ally-hero": { one: "Ally hero", many: "Ally heroes" },
-        "enemy-creep": { one: "Enemy creep", many: "Enemy creeps" },
-        "ally-creep": { one: "Ally creep", many: "Ally creeps" },
-      };
+			const CAT = {
+				"enemy-hero": { one: "Enemy hero", many: "Enemy heroes" },
+				"ally-hero": { one: "Ally hero", many: "Ally heroes" },
+				"enemy-creep": { one: "Enemy creep", many: "Enemy creeps" },
+				"ally-creep": { one: "Ally creep", many: "Ally creeps" },
+			};
 
-      /** "npc_dota_hero_crystal_maiden" -> "Crystal Maiden" */
-      const fmtTarget = (s) =>
-        String(s)
-          .replace(/^npc_dota_(?:hero_|creep_|neutral_)?/, "")
-          .replace(/goodguys/g, "radiant")
-          .replace(/badguys/g, "dire")
-          .split("_")
-          .filter(Boolean)
-          .map((w) => w[0].toUpperCase() + w.slice(1))
-          .join(" ");
+			/** "npc_dota_hero_crystal_maiden" -> "Crystal Maiden" */
+			const fmtTarget = (s) =>
+				String(s)
+					.replace(/^npc_dota_(?:hero_|creep_|neutral_)?/, "")
+					.replace(/goodguys/g, "radiant")
+					.replace(/badguys/g, "dire")
+					.split("_")
+					.filter(Boolean)
+					.map((w) => w[0].toUpperCase() + w.slice(1))
+					.join(" ");
 
-      /** Normalised hook list: adds relative time, category and label. */
-      function normalise() {
-        const { hooks, start } = state.data;
-        return hooks.map((h, i) => {
-          const time = h.timestamp - (start || 0);
-          // Discriminated union: a missed hook carries no category or target.
-          if (h.isMissed)
-            return {
-              i: i + 1,
-              time,
-              missed: true,
-              reclassified: false,
-              category: null,
-              target: null,
-            };
-          const category =
-            (h.isEnemy ? "enemy" : "ally") + (h.isCreep ? "-creep" : "-hero");
-          // Landed hooks the user chose to count as whiffs.
-          const reclassified =
-            (category === "enemy-creep" && state.whiff.enemyCreep) ||
-            (category === "ally-creep" && state.whiff.allyCreep) ||
-            (category === "ally-hero" && state.whiff.allyHero);
-          return {
-            i: i + 1,
-            time,
-            missed: reclassified,
-            reclassified,
-            category,
-            target: h.target ? fmtTarget(h.target) : "Unknown",
-          };
-        });
-      }
-      // Target filters only apply to hooks that landed (whiffs have no target).
-      const filtered = () =>
-        normalise().filter(
-          (h) =>
-            (state.result === "all" ||
-              (state.result === "hit" ? !h.missed : h.missed)) &&
-            (state.target === "all" ||
-              state.result === "miss" ||
-              (!h.missed && h.category === state.target)),
-        );
+			/** Normalised hook list: adds relative time, category and label. */
+			function normalise() {
+				const { hooks, start } = state.data;
+				return hooks.map((h, i) => {
+					const time = h.timestamp - (start || 0);
+					// Discriminated union: a missed hook carries no category or target.
+					if (h.isMissed)
+						return {
+							i: i + 1,
+							time,
+							missed: true,
+							reclassified: false,
+							category: null,
+							target: null,
+						};
+					const category =
+						(h.isEnemy ? "enemy" : "ally") + (h.isCreep ? "-creep" : "-hero");
+					// Landed hooks the user chose to count as whiffs.
+					const reclassified =
+						(category === "enemy-creep" && state.whiff.enemyCreep) ||
+						(category === "ally-creep" && state.whiff.allyCreep) ||
+						(category === "ally-hero" && state.whiff.allyHero);
+					return {
+						i: i + 1,
+						time,
+						missed: reclassified,
+						reclassified,
+						category,
+						target: h.target ? fmtTarget(h.target) : "Unknown",
+					};
+				});
+			}
+			// Target filters only apply to hooks that landed (whiffs have no target).
+			const filtered = () =>
+				normalise().filter(
+					(h) =>
+						(state.result === "all" ||
+							(state.result === "hit" ? !h.missed : h.missed)) &&
+						(state.target === "all" ||
+							state.result === "miss" ||
+							(!h.missed && h.category === state.target)),
+				);
 
-      /* ---------- views ---------- */
-      function viewOverview(list) {
-        const total = list.length;
-        const missed = list.filter((h) => h.missed).length;
-        const hit = total - missed;
+			/* ---------- views ---------- */
+			function viewOverview(list) {
+				const total = list.length;
+				const missed = list.filter((h) => h.missed).length;
+				const hit = total - missed;
 
-        // Only landed hooks have a category/target, so breakdowns count those only.
-        const landed = list.filter((h) => !h.missed);
-        const group = (keyFn) => {
-          const map = new Map();
-          landed.forEach((h) => {
-            const k = keyFn(h);
-            map.set(k, (map.get(k) || 0) + 1);
-          });
-          return [...map.entries()].sort((a, b) => b[1] - a[1]);
-        };
-        const rows = (entries) => {
-          const top = entries.length ? entries[0][1] : 1;
-          return entries.length
-            ? entries
-                .map(
-                  ([name, n]) => `<div class="brow">
+				// Only landed hooks have a category/target, so breakdowns count those only.
+				const landed = list.filter((h) => !h.missed);
+				const group = (keyFn) => {
+					const map = new Map();
+					landed.forEach((h) => {
+						const k = keyFn(h);
+						map.set(k, (map.get(k) || 0) + 1);
+					});
+					return [...map.entries()].sort((a, b) => b[1] - a[1]);
+				};
+				const rows = (entries) => {
+					const top = entries.length ? entries[0][1] : 1;
+					return entries.length
+						? entries
+								.map(
+									([name, n]) => `<div class="brow">
                     <div class="name" title="${esc(name)}">${esc(name)}</div>
                     <div class="track"><i class="h" style="width:${pct(n, top)}%"></i></div>
                     <div class="num">${n} · ${pct(n, landed.length)}%</div>
                   </div>`,
-                )
-                .join("")
-            : `<div class="empty">Nothing here 🎣</div>`;
-        };
+								)
+								.join("")
+						: `<div class="empty">Nothing here 🎣</div>`;
+				};
 
-        return `
+				return `
           <div class="stats">
             <div class="stat total"><div class="k">Total hooks</div><div class="v">${total}</div></div>
             <div class="stat hit"><div class="k">Hooked</div><div class="v">${hit}</div></div>
@@ -987,36 +1094,35 @@
             <div><h3>Who gets hooked?</h3><div class="breakdown">${rows(group((h) => CAT[h.category].many))}</div></div>
             <div><h3>Top targets</h3><div class="breakdown">${rows(group((h) => h.target).slice(0, 8))}</div></div>
           </div>`;
-      }
+			}
 
-      function viewTable(list) {
-        const keys = {
-          time: (h) => h.time,
-          result: (h) => h.missed,
-          category: (h) => h.category ?? "",
-          target: (h) => h.target ?? "",
-        };
-        const sorted = [...list].sort((a, b) => {
-          const x = keys[state.sortKey](a),
-            y = keys[state.sortKey](b);
-          return (x > y ? 1 : x < y ? -1 : 0) * state.sortDir;
-        });
-        const arrow = (k) =>
-          state.sortKey === k ? (state.sortDir > 0 ? " ▲" : " ▼") : "";
-        const body = sorted.length
-          ? sorted
-              .map(
-                (h) => `<tr>
+			function viewTable(list) {
+				const keys = {
+					time: (h) => h.time,
+					result: (h) => h.missed,
+					category: (h) => h.category ?? "",
+					target: (h) => h.target ?? "",
+				};
+				const sorted = [...list].sort((a, b) => {
+					const x = keys[state.sortKey](a),
+						y = keys[state.sortKey](b);
+					return (x > y ? 1 : x < y ? -1 : 0) * state.sortDir;
+				});
+				const arrow = (k) => (state.sortKey === k ? (state.sortDir > 0 ? " ▲" : " ▼") : "");
+				const body = sorted.length
+					? sorted
+							.map(
+								(h) => `<tr>
                   <td>${h.i}</td>
                   <td>${fmtTime(h.time, state.decimals)}</td>
                   <td><span class="pill ${h.missed ? "miss" : "hit"}">${h.missed ? "WHIFF" : "HOOKED"}</span></td>
                   <td>${h.category ? `<span class="pill tag">${CAT[h.category].one}</span>` : `<span class="dash">—</span>`}</td>
                   <td>${h.category ? esc(h.target) + (h.reclassified ? `<span class="note">counted as whiff</span>` : "") : `<span class="dash">—</span>`}</td>
                 </tr>`,
-              )
-              .join("")
-          : `<tr><td colspan="5" class="empty">No hooks match. Try loosening the filters 🎣</td></tr>`;
-        return `<div class="table-wrap"><table>
+							)
+							.join("")
+					: `<tr><td colspan="5" class="empty">No hooks match. Try loosening the filters 🎣</td></tr>`;
+				return `<div class="table-wrap"><table>
           <thead><tr>
             <th>#</th>
             <th class="sortable" data-sort="time">Time${arrow("time")}</th>
@@ -1024,18 +1130,18 @@
             <th class="sortable" data-sort="category">Type${arrow("category")}</th>
             <th class="sortable" data-sort="target">Target${arrow("target")}</th>
           </tr></thead><tbody>${body}</tbody></table></div>`;
-      }
+			}
 
-      function viewTimeline(list) {
-        if (!list.length)
-          return `<div class="empty">No hooks match. Try loosening the filters 🎣</div>`;
-        const all = normalise();
-        const min = Math.min(0, ...all.map((h) => h.time));
-        const max = Math.max(...all.map((h) => h.time), min + 1);
-        const span = max - min;
-        const x = (t) => ((t - min) / span) * 100;
-        const ticks = Array.from({ length: 6 }, (_, i) => min + (span * i) / 5);
-        return `
+			function viewTimeline(list) {
+				if (!list.length)
+					return `<div class="empty">No hooks match. Try loosening the filters 🎣</div>`;
+				const all = normalise();
+				const min = Math.min(0, ...all.map((h) => h.time));
+				const max = Math.max(...all.map((h) => h.time), min + 1);
+				const span = max - min;
+				const x = (t) => ((t - min) / span) * 100;
+				const ticks = Array.from({ length: 6 }, (_, i) => min + (span * i) / 5);
+				return `
           <h3>The Hook Reel</h3>
           <div class="timeline">
             <span class="lane up">HOOKED</span>
@@ -1043,175 +1149,200 @@
             <div class="axis"></div>
             ${ticks.map((t) => `<span class="tickline" style="left:${x(t)}%"></span><span class="tick" style="left:${x(t)}%">${fmtTime(t)}</span>`).join("")}
             ${list
-              .map(
-                (
-                  h,
-                ) => `<span class="mark ${h.missed ? "miss" : "hit"}" style="left:${x(h.time)}%"
+				.map(
+					(
+						h,
+					) => `<span class="mark ${h.missed ? "miss" : "hit"}" style="left:${x(h.time)}%"
                   data-tip="#${h.i} · ${fmtTime(h.time)} · ${h.reclassified ? "Whiff · hit " + esc(h.target) : h.missed ? "Whiff" : "Hooked · " + esc(h.target)}"></span>`,
-              )
-              .join("")}
+				)
+				.join("")}
           </div>
           <p class="hint">Poke a dot to see the details. Times count from the start of the match.</p>`;
-      }
+			}
 
-      function viewRaw() {
-        return `<button type="button" class="btn copy" id="copy-btn">Copy JSON</button>
+			function viewRaw() {
+				return `<button type="button" class="btn copy" id="copy-btn">Copy JSON</button>
           <pre class="raw">${esc(JSON.stringify(state.data, null, 2))}</pre>`;
-      }
+			}
 
-      function render() {
-        if (!state.data) return;
-        $("filters").hidden = state.view === "raw";
-        $("f-target").classList.toggle("disabled", state.result === "miss");
-        $("display-opts").hidden = state.view !== "table";
-        const list = filtered();
-        panel.innerHTML =
-          state.view === "overview"
-            ? viewOverview(list)
-            : state.view === "table"
-              ? viewTable(list)
-              : state.view === "timeline"
-                ? viewTimeline(list)
-                : viewRaw();
-      }
+			function render() {
+				if (!state.data) return;
+				$("filters").hidden = state.view === "raw";
+				$("f-target").classList.toggle("disabled", state.result === "miss");
+				$("display-opts").hidden = state.view !== "table";
+				const list = filtered();
+				panel.innerHTML =
+					state.view === "overview"
+						? viewOverview(list)
+						: state.view === "table"
+							? viewTable(list)
+							: state.view === "timeline"
+								? viewTimeline(list)
+								: viewRaw();
+			}
 
-      /* ---------- toggles ---------- */
-      function bindSeg(id, onPick) {
-        $(id).addEventListener("click", (e) => {
-          const btn = e.target.closest("button");
-          if (!btn) return;
-          [...$(id).children].forEach((b) =>
-            b.classList.toggle("on", b === btn),
-          );
-          onPick(btn.dataset.view || btn.dataset.v);
-          render();
-        });
-      }
-      bindSeg("view-seg", (v) => (state.view = v));
-      bindSeg("f-result", (v) => (state.result = v));
-      bindSeg("f-target", (v) => (state.target = v));
+			/* ---------- toggles ---------- */
+			function bindSeg(id, onPick) {
+				$(id).addEventListener("click", (e) => {
+					const btn = e.target.closest("button");
+					if (!btn) return;
+					[...$(id).children].forEach((b) => b.classList.toggle("on", b === btn));
+					onPick(btn.dataset.view || btn.dataset.v);
+					render();
+				});
+			}
+			bindSeg("view-seg", (v) => (state.view = v));
+			bindSeg("f-result", (v) => (state.result = v));
+			bindSeg("f-target", (v) => (state.target = v));
 
-      document.querySelectorAll("[data-rule]").forEach((el) =>
-        el.addEventListener("change", () => {
-          state.whiff[el.dataset.rule] = el.checked;
-          render();
-        }),
-      );
-      $("t-decimals").addEventListener("change", (e) => {
-        state.decimals = e.target.checked;
-        render();
-      });
+			document.querySelectorAll("[data-rule]").forEach((el) =>
+				el.addEventListener("change", () => {
+					state.whiff[el.dataset.rule] = el.checked;
+					render();
+				}),
+			);
+			$("t-decimals").addEventListener("change", (e) => {
+				state.decimals = e.target.checked;
+				render();
+			});
 
-      const clearTips = () =>
-        document.querySelectorAll(".tip").forEach((t) => t.remove());
-      function showTip(mark) {
-        clearTips();
-        const tip = document.createElement("div");
-        tip.className = "tip";
-        tip.textContent = mark.dataset.tip;
-        tip.style.left = `${Math.min(86, Math.max(14, parseFloat(mark.style.left)))}%`;
-        tip.style.top = `${mark.offsetTop - 40}px`;
-        mark.parentElement.appendChild(tip);
-      }
+			const clearTips = () => document.querySelectorAll(".tip").forEach((t) => t.remove());
+			function showTip(mark) {
+				clearTips();
+				const tip = document.createElement("div");
+				tip.className = "tip";
+				tip.textContent = mark.dataset.tip;
+				tip.style.left = `${Math.min(86, Math.max(14, parseFloat(mark.style.left)))}%`;
+				tip.style.top = `${mark.offsetTop - 40}px`;
+				mark.parentElement.appendChild(tip);
+			}
 
-      panel.addEventListener("click", (e) => {
-        const th = e.target.closest("th[data-sort]");
-        if (th) {
-          const k = th.dataset.sort;
-          state.sortDir = state.sortKey === k ? -state.sortDir : 1;
-          state.sortKey = k;
-          render();
-          return;
-        }
-        const copy = e.target.closest("#copy-btn");
-        if (copy) {
-          navigator.clipboard?.writeText(JSON.stringify(state.data, null, 2));
-          copy.textContent = "Copied! 👌";
-          setTimeout(() => (copy.textContent = "Copy JSON"), 1200);
-          return;
-        }
-        const mark = e.target.closest(".mark");
-        mark ? showTip(mark) : clearTips();
-      });
-      panel.addEventListener("mouseover", (e) => {
-        const mark = e.target.closest(".mark");
-        if (mark) showTip(mark);
-      });
-      panel.addEventListener("mouseout", (e) => {
-        if (e.target.closest(".mark")) clearTips();
-      });
+			panel.addEventListener("click", (e) => {
+				const th = e.target.closest("th[data-sort]");
+				if (th) {
+					const k = th.dataset.sort;
+					state.sortDir = state.sortKey === k ? -state.sortDir : 1;
+					state.sortKey = k;
+					render();
+					return;
+				}
+				const copy = e.target.closest("#copy-btn");
+				if (copy) {
+					navigator.clipboard?.writeText(JSON.stringify(state.data, null, 2));
+					copy.textContent = "Copied! 👌";
+					setTimeout(() => (copy.textContent = "Copy JSON"), 1200);
+					return;
+				}
+				const mark = e.target.closest(".mark");
+				mark ? showTip(mark) : clearTips();
+			});
+			panel.addEventListener("mouseover", (e) => {
+				const mark = e.target.closest(".mark");
+				if (mark) showTip(mark);
+			});
+			panel.addEventListener("mouseout", (e) => {
+				if (e.target.closest(".mark")) clearTips();
+			});
 
-      /* ---------- upload ---------- */
-      function setFile(file) {
-        $("drop-title").innerHTML = file
-          ? `<span class="file-name">${esc(file.name)}</span>`
-          : "Drop a replay here";
-        $("drop-sub").textContent = file
-          ? `${(file.size / 1024).toFixed(1)} KB · click to swap it`
-          : "or click to dig one up";
-        submitBtn.disabled = !file;
-      }
-      fileInput.addEventListener("change", () => setFile(fileInput.files[0]));
-      ["dragenter", "dragover"].forEach((ev) =>
-        drop.addEventListener(ev, (e) => {
-          e.preventDefault();
-          drop.classList.add("drag");
-        }),
-      );
-      ["dragleave", "drop"].forEach((ev) =>
-        drop.addEventListener(ev, (e) => {
-          e.preventDefault();
-          drop.classList.remove("drag");
-        }),
-      );
-      drop.addEventListener("drop", (e) => {
-        if (e.dataTransfer.files.length) {
-          fileInput.files = e.dataTransfer.files;
-          setFile(fileInput.files[0]);
-        }
-      });
+			/* ---------- upload ---------- */
+			function setFile(file) {
+				$("drop-title").innerHTML = file
+					? `<span class="file-name">${esc(file.name)}</span>`
+					: "Drop a replay here";
+				$("drop-sub").textContent = file
+					? `${(file.size / 1024).toFixed(1)} KB · click to swap it`
+					: "or click to dig one up";
+				submitBtn.disabled = !file;
+			}
+			fileInput.addEventListener("change", () => setFile(fileInput.files[0]));
+			["dragenter", "dragover"].forEach((ev) =>
+				drop.addEventListener(ev, (e) => {
+					e.preventDefault();
+					drop.classList.add("drag");
+				}),
+			);
+			["dragleave", "drop"].forEach((ev) =>
+				drop.addEventListener(ev, (e) => {
+					e.preventDefault();
+					drop.classList.remove("drag");
+				}),
+			);
+			drop.addEventListener("drop", (e) => {
+				if (e.dataTransfer.files.length) {
+					fileInput.files = e.dataTransfer.files;
+					setFile(fileInput.files[0]);
+				}
+			});
 
-      function showError(msg) {
-        errorBox.textContent = "Whoops! " + msg;
-        errorBox.hidden = false;
-        resultsEl.hidden = true;
-      }
+			// Kept in JS (not in the HTML) so an auto-formatter can't insert line breaks into it.
+			const REPLAYS_PATH = String.raw`C:\Program Files (x86)\Steam\steamapps\common\dota 2 beta\game\dota\replays`;
+			$("replay-path").textContent = REPLAYS_PATH;
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const file = fileInput.files[0];
-        if (!file) return;
+			$("copy-path").addEventListener("click", async (e) => {
+				const btn = e.currentTarget;
+				const text = REPLAYS_PATH;
+				try {
+					await navigator.clipboard.writeText(text);
+				} catch {
+					// Fallback for non-secure contexts where the Clipboard API is unavailable.
+					const ta = document.createElement("textarea");
+					ta.value = text;
+					ta.style.position = "fixed";
+					ta.style.opacity = "0";
+					document.body.appendChild(ta);
+					ta.select();
+					document.execCommand("copy");
+					ta.remove();
+				}
+				btn.classList.add("done");
+				btn.title = "Copied!";
+				setTimeout(() => {
+					btn.classList.remove("done");
+					btn.title = "Copy path";
+				}, 1400);
+			});
 
-        errorBox.hidden = true;
-        submitBtn.disabled = true;
-        submitBtn.classList.add("loading");
-        $("btn-text").textContent = "Counting whiffs…";
+			function showError(msg) {
+				errorBox.textContent = "Whoops! " + msg;
+				errorBox.hidden = false;
+				resultsEl.hidden = true;
+			}
 
-        try {
-          const formData = new FormData();
-          formData.append("file", file);
-          const response = await fetch("/", { method: "POST", body: formData });
+			form.addEventListener("submit", async (e) => {
+				e.preventDefault();
+				const file = fileInput.files[0];
+				if (!file) return;
 
-          if (!response.ok) {
-            const text = await response.text();
-            showError(text || "An error occurred");
-            return;
-          }
+				errorBox.hidden = true;
+				submitBtn.disabled = true;
+				submitBtn.classList.add("loading");
+				$("btn-text").textContent = "Counting whiffs…";
 
-          /** @type {HookResponse} */
-          const data = await response.json();
-          state.data = { ...data, hooks: data.hooks || [] };
-          resultsEl.hidden = false;
-          render();
-          resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
-        } catch (err) {
-          showError(err?.message || "Something went wrong");
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.classList.remove("loading");
-          $("btn-text").textContent = "Count my misses!";
-        }
-      });
-    </script>
-  </body>
+				try {
+					const formData = new FormData();
+					formData.append("file", file);
+					const response = await fetch("/", { method: "POST", body: formData });
+
+					if (!response.ok) {
+						const text = await response.text();
+						showError(text || "An error occurred");
+						return;
+					}
+
+					/** @type {HookResponse} */
+					const data = await response.json();
+					state.data = { ...data, hooks: data.hooks || [] };
+					resultsEl.hidden = false;
+					render();
+					resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
+				} catch (err) {
+					showError(err?.message || "Something went wrong");
+				} finally {
+					submitBtn.disabled = false;
+					submitBtn.classList.remove("loading");
+					$("btn-text").textContent = "Count my misses!";
+				}
+			});
+		</script>
+	</body>
 </html>
