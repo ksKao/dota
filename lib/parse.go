@@ -109,16 +109,16 @@ func ParseDemFile(r io.Reader) (start float32, hooks []models.Hook, err error) {
 		case eventTypeDamage:
 			// check if there's an element after next
 			if i == len(events)-2 {
-				hooks = append(hooks, *models.NewHook(event.Timestamp).NotMissed(&event.Target).Enemy().Creep())
+				hooks = append(hooks, *models.NewHook(event.Timestamp).NotMissed(&next.Target).Enemy().Creep())
 				return
 			}
 			afterNext := events[i+2]
 			switch afterNext.Type {
 			case eventTypeCast:
-				hooks = append(hooks, *models.NewHook(event.Timestamp).NotMissed(&event.Target).Enemy().Creep())
+				hooks = append(hooks, *models.NewHook(event.Timestamp).NotMissed(&next.Target).Enemy().Creep())
 				i += 2
 			case eventTypeModifier:
-				hooks = append(hooks, *models.NewHook(event.Timestamp).NotMissed(&event.Target).Enemy().Hero())
+				hooks = append(hooks, *models.NewHook(event.Timestamp).NotMissed(&next.Target).Enemy().Hero())
 				i += 3
 			default:
 				err = errors.New("unexpected consecutive damage event")
@@ -126,9 +126,9 @@ func ParseDemFile(r io.Reader) (start float32, hooks []models.Hook, err error) {
 			}
 		case eventTypeModifier:
 			if strings.HasPrefix(next.Target, "npc_dota_creep") {
-				hooks = append(hooks, *models.NewHook(event.Timestamp).NotMissed(&event.Target).Ally().Creep())
+				hooks = append(hooks, *models.NewHook(event.Timestamp).NotMissed(&next.Target).Ally().Creep())
 			} else {
-				hooks = append(hooks, *models.NewHook(event.Timestamp).NotMissed(&event.Target).Ally().Hero())
+				hooks = append(hooks, *models.NewHook(event.Timestamp).NotMissed(&next.Target).Ally().Hero())
 			}
 			i += 2
 		}

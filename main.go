@@ -1,46 +1,15 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"os"
+	"net/http"
 
-	"github.com/ksKao/dota/lib"
+	"github.com/ksKao/dota/handlers"
 )
 
 func main() {
-	// Create a new parser instance from a file. Alternatively see NewParser([]byte)
-	f, err := os.Open("replay.dem")
-	if err != nil {
-		log.Fatalf("unable to open file: %s", err)
-	}
-	defer f.Close()
+	handlers.RegisterRootRoutes()
 
-	startTime, hooks, err := lib.ParseDemFile(f)
-	if err != nil {
-		log.Fatalf("failed to parse dem file: %s", err)
-	}
-
-	for _, hook := range hooks {
-		time := hook.Timestamp - startTime
-		content := ""
-		if hook.IsMissed {
-			content = "Missed"
-		} else if *hook.IsEnemy {
-			if *hook.IsCreep {
-				content = "Hooked enemy creep"
-			} else {
-				content = "Hooked enemy"
-			}
-		} else {
-			if *hook.IsCreep {
-				content = "Hooked ally creep"
-			} else {
-				content = "Hooked ally"
-			}
-		}
-		fmt.Printf("[%s] %s\n", lib.FormatMinutesSeconds(time), content)
-	}
-
-	log.Printf("Parse Complete!\n")
+	log.Println("Server running at http://localhost:8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
