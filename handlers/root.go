@@ -23,14 +23,28 @@ func rootGetHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func rootPostHandler(w http.ResponseWriter, r *http.Request) {
-	file, headers, err := r.FormFile("file")
+	const maxSize = 500 << 20 // 500 MiB (500 * 1024 * 1024 bytes)
+	r.Body = http.MaxBytesReader(w, r.Body, maxSize)
+
+	err := r.ParseMultipartForm(maxSize)
+	if err != nil {
+		http.Error(w, "file too large (max 500 mb)", http.StatusRequestEntityTooLarge)
+		return
+	}
+
+	file, header, err := r.FormFile("file")
 	if err != nil {
 		http.Error(w, "failed to get file", http.StatusBadRequest)
 		return
 	}
 	defer file.Close()
 
-	if !strings.HasSuffix(headers.Filename, ".dem") {
+	if header.Size > maxSize {
+		http.Error(w, "file too large (max 500 mb)", http.StatusRequestEntityTooLarge)
+		return
+	}
+
+	if !strings.HasSuffix(header.Filename, ".dem") {
 		http.Error(w, "not a replay file", http.StatusBadRequest)
 		return
 	}
